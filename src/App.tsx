@@ -1,9 +1,10 @@
 import React from "react"
+import Home from "./pages/home"
 
 const App: React.FC = () => {
   return (
-    <div>
-      <span className="font-bold">TASKIFY</span>
+    <div className="w-screen h-screen">
+      <Home />
     </div>
   )
 }
