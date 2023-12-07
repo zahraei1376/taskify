@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { MdDeleteForever } from "@react-icons/all-files/md/MdDeleteForever";
 import { MdEdit } from "@react-icons/all-files/md/MdEdit";
 import { FaCheck } from "@react-icons/all-files/fa/FaCheck";
@@ -31,12 +31,18 @@ const SingleTodos = ({ todo, todos, setTodos }: Props) => {
         setEdit(false);
     }
 
+    const inputRef = useRef<HTMLInputElement>(null);
+
+    useEffect(() => {
+        inputRef.current?.focus();
+    }, [edit]);
+
     return (
         <form className="rounded bg-amber-400 flex justify-between items-center p-3 w-full sm:w-80 my-2" onSubmit={(e) => handleForm(e, todo.id)}>
             {
                 edit ?
                     <div className="flex items-center">
-                        <input className="p-1 outline-none" value={editTodo} onChange={(e) => setEditTodo(e.target.value)} />
+                        <input ref={inputRef} className="p-1 outline-none" value={editTodo} onChange={(e) => setEditTodo(e.target.value)} />
                         <span className="cursor-pointer pr-1 -ml-6" onClick={() => handleEdit(todo.id)}><FaCheck /></span>
                     </div>
                     :
