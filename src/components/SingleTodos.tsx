@@ -39,7 +39,7 @@ const SingleTodos = ({ todo, todos, setTodos }: Props) => {
     }, [edit]);
 
     return (
-        <form className="rounded bg-amber-400 flex justify-between items-center p-3 w-full sm:w-80 my-2" onSubmit={(e) => handleForm(e, todo.id)}>
+        <form className="transition duration-100 hover:shadow-2xl hover:scale-[1.02] rounded bg-amber-400 flex justify-between items-center p-3 my-2" onSubmit={(e) => handleForm(e, todo.id)}>
             {
                 edit ?
                     <div className="flex items-center">
