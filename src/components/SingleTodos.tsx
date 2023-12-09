@@ -10,6 +10,7 @@ type Props = {
     todos: Todo[],
     setTodos: React.Dispatch<React.SetStateAction<Todo[]>>,
 }
+
 const SingleTodos = ({ todo, todos, setTodos }: Props) => {
     const [edit, setEdit] = useState<boolean>(false);
     const [editTodo, setEditTodo] = useState<string>(todo.todo);

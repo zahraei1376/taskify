@@ -1,9 +1,15 @@
-import React, { useState } from "react";
+import React, { useReducer, useState } from "react";
 import InputFeild from "../components/InputFeild";
 import { Todo } from "../Models";
 import TodoList from "../components/TodoList";
+import { TodoReducer } from "../hooks/Reducer";
 
 const Home: React.FC = () => {
+    const createInitialState = () => {
+        return { todos: [] }
+    }
+    // @ts-expect-error
+    const [state, dispatch] = useReducer(TodoReducer, null, createInitialState);
     const [todo, setTodo] = useState<string>("");
     const [todos, setTodos] = useState<Todo[]>([]);
 
