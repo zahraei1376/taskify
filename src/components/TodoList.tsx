@@ -14,9 +14,9 @@ const TodoList: React.FC<Props> = ({ todos, setTodos, complatedTodos, setComplat
         <div className="w-11/12 flex items-start">
             <Droppable droppableId="todosList">
                 {
-                    (provided) => (
+                    (provided, snapshot) => (
                         <div
-                            className="w-1/2 bg-sky-700 rounded mt-3 p-3 mr-1"
+                            className={`w-1/2 rounded mt-3 p-3 mr-1 ${snapshot.isDraggingOver ? "bg-sky-600" : "bg-sky-700"}`}
                             ref={provided.innerRef}
                             {...provided.droppableProps}
                         >
@@ -39,9 +39,9 @@ const TodoList: React.FC<Props> = ({ todos, setTodos, complatedTodos, setComplat
             </Droppable>
             <Droppable droppableId="todosRemove">
                 {
-                    (provided) => (
+                    (provided, snapshot) => (
                         <div
-                            className="w-1/2 bg-red-500 rounded mt-3 p-3 ml-1"
+                            className={`w-1/2 rounded mt-3 p-3 ml-1 ${snapshot.isDraggingOver ? "bg-red-400" : "bg-red-500"}`}
                             ref={provided.innerRef}
                             {...provided.droppableProps}
                         >
