@@ -25,10 +25,25 @@ const Home: React.FC = () => {
 
     }
 
+    const swap = (array: Todo[], index1: number, index2: number) => {
+        const temp = array[index1];
+        array[index1] = array[index2];
+        array[index2] = temp;
+    }
+
     const onDragEnd = (result: DropResult) => {
         const { source, destination } = result;
         if (!destination) return;
-        if (destination.droppableId === source.droppableId && destination.index === source.index) return;
+
+        // if (destination.droppableId === source.droppableId && destination.index === source.index) return;
+        if (destination.droppableId === source.droppableId && source.droppableId === "todosList") {
+            swap(todos, source.index, destination.index);
+            return;
+        } else if (destination.droppableId === source.droppableId && source.droppableId === "todosRemove") {
+            swap(complatedTodos, source.index, destination.index);
+            return;
+        }
+
 
         let add;
         const active = todos;
