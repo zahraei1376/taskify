@@ -37,11 +37,16 @@ const Home: React.FC = () => {
         if (source.droppableId === "todosList") {
             add = active[source.index];
             active.splice(source.index, 1);
-            complated.splice(source.index, 0, add);
         } else {
             add = complated[source.index];
             complated.splice(source.index, 1);
+        }
+
+
+        if (destination.droppableId === "todosList") {
             active.splice(source.index, 0, add);
+        } else {
+            complated.splice(source.index, 0, add);
         }
 
         setTodos(active);
