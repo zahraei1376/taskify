@@ -1,14 +1,16 @@
-import React from "react";
+import React, { Dispatch } from "react";
 import { Todo } from "../Models";
 import SingleTodos from "./SingleTodos";
 import { Droppable } from "react-beautiful-dnd";
+import { ActionType } from "../hooks/Reducer";
 
 interface Props {
     todos: Todo[],
-    setTodos: React.Dispatch<React.SetStateAction<Todo[]>>,
+    setTodos: Dispatch<ActionType>,
     complatedTodos: Todo[],
-    setComplatedTodos: React.Dispatch<React.SetStateAction<Todo[]>>,
+    setComplatedTodos: Dispatch<ActionType>,
 }
+
 const TodoList: React.FC<Props> = ({ todos, setTodos, complatedTodos, setComplatedTodos }) => {
     return (
         <div className="w-11/12 flex items-start">
@@ -27,7 +29,6 @@ const TodoList: React.FC<Props> = ({ todos, setTodos, complatedTodos, setComplat
                                         index={index}
                                         todo={todo}
                                         key={todo.id}
-                                        todos={todos}
                                         setTodos={setTodos} />
                                 ))}
                             </div>
@@ -52,7 +53,6 @@ const TodoList: React.FC<Props> = ({ todos, setTodos, complatedTodos, setComplat
                                         index={index}
                                         todo={todo}
                                         key={todo.id}
-                                        todos={complatedTodos}
                                         setTodos={setComplatedTodos} />
                                 ))}
                             </div>

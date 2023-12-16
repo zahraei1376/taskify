@@ -5,23 +5,26 @@ import { FaCheck } from "@react-icons/all-files/fa/FaCheck";
 import { FaCheckDouble } from "@react-icons/all-files/fa/FaCheckDouble";
 import { Todo } from "../Models";
 import { Draggable } from "react-beautiful-dnd";
+import { ActionType } from "../hooks/Reducer";
 
 type Props = {
     index: number,
     todo: Todo,
-    todos: Todo[],
-    setTodos: React.Dispatch<React.SetStateAction<Todo[]>>,
+    setTodos: React.Dispatch<ActionType>,
 }
 
-const SingleTodos = ({ index, todo, todos, setTodos }: Props) => {
+const SingleTodos = ({ index, todo, setTodos }: Props) => {
     const [edit, setEdit] = useState<boolean>(false);
     const [editTodo, setEditTodo] = useState<string>(todo.todo);
+
     const handleDone = (id: number) => {
-        setTodos(todos.map(todo => todo.id === id ? { ...todo, isDone: !todo.isDone } : todo));
+        setTodos({ type: "DONE", payload: { id } })
+        // setTodos(todos.map(todo => todo.id === id ? { ...todo, isDone: !todo.isDone } : todo));
     }
 
     const handleDelete = (id: number) => {
-        setTodos(todos.filter(todo => todo.id !== id));
+        setTodos({ type: "REMOVE_TODO", payload: { id } });
+        // setTodos(todos.filter(todo => todo.id !== id));
     }
 
     const handleForm = (e: React.FormEvent, id: number) => {
@@ -30,7 +33,8 @@ const SingleTodos = ({ index, todo, todos, setTodos }: Props) => {
     }
 
     const handleEdit = (id: number) => {
-        setTodos(todos.map(todo => todo.id === id ? { ...todo, todo: editTodo } : todo));
+        setTodos({ type: "EDIT_TODO", payload: { id, todo: editTodo } });
+        // setTodos(todos.map(todo => todo.id === id ? { ...todo, todo: editTodo } : todo));
         setEdit(false);
     }
 
