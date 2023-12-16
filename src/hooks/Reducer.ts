@@ -22,10 +22,15 @@ export type ActionType =
     { type: "ADD_COMPLETED_TODO"; payload: { id: number } } |
     { type: "REORDER_TODOS"; payload: { result: DropResult } };
 
-
 export interface StateType {
     todos: Todo[],
     completedTodos: Todo[],
+}
+
+const swap = (array: Todo[], index1: number, index2: number) => {
+    const temp = array[index1];
+    array[index1] = array[index2];
+    array[index2] = temp;
 }
 
 export const TodoReducer = (state: StateType, action: ActionType): StateType => {
@@ -73,23 +78,26 @@ export const TodoReducer = (state: StateType, action: ActionType): StateType => 
             const sourceTodos = source.droppableId === "todosList" ? state.todos : state.completedTodos;
             const destinationTodos = destination?.droppableId === "todosList" ? state.todos : state.completedTodos;
 
-            const [removed] = sourceTodos.splice(source.index, 1);
-            if (destination?.index || destination?.index === 0) {
-                destinationTodos.splice(destination.index, 0, { ...removed, isDone: true });
+            if (destination && destination.droppableId === source.droppableId) {
+                swap(sourceTodos, source.index, destination.index);
+                return {
+                    ...state,
+                    todos: source.droppableId === "todosList" ? sourceTodos : state.todos,
+                    completedTodos: source.droppableId === "todosRemove" ? sourceTodos : state.completedTodos,
+                };
+            } else {
+                const [removed] = sourceTodos.splice(source.index, 1);
+                if (destination?.index || destination?.index === 0) {
+                    destinationTodos.splice(destination.index, 0, { ...removed, isDone: !removed.isDone });
+                }
+
+                return {
+                    ...state,
+                    todos: source.droppableId === "todosList" ? sourceTodos : destinationTodos,
+                    completedTodos: source.droppableId === "todosRemove" ? sourceTodos : destinationTodos,
+                };
             }
-
-            return {
-                ...state,
-                todos: source.droppableId === "todosList" ? sourceTodos : destinationTodos,
-                completedTodos: source.droppableId === "todosRemove" ? sourceTodos : destinationTodos,
-            };
         }
-
-        // case Type.ADD_COMPLETED_TODO:
-        //     return {
-        //         ...state,
-        //         todos: state.todos.map(todo => todo.id === action.payload ? { ...todo, todo: action.payload } : todo)
-        //     }
 
         default:
             return state;
