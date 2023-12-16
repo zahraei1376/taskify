@@ -45,11 +45,22 @@ export const TodoReducer = (state: StateType, action: ActionType): StateType => 
                 todos: state.todos.filter(todo => todo.id !== action.payload.id)
             }
 
-        // case Type.DONE:
-        //     return {
-        //         ...state,
-        //         todos: state.todos.map(todo => todo.id === action.payload ? { ...todo, isDone: true } : todo)
-        //     }
+        case "DONE": {
+            const sourceTodos = state.todos;
+            const destinationTodos = state.completedTodos;
+
+            const index = sourceTodos.findIndex(item => item.id === action.payload.id);
+            if (index < 0) return state;
+            const [removed] = sourceTodos.splice(index, 1);
+            destinationTodos.push(removed);
+
+            return {
+                ...state,
+                todos: sourceTodos,
+                completedTodos: destinationTodos,
+            }
+        }
+
 
         case "EDIT_TODO":
             return {
