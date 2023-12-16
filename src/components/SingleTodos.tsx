@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { MdDeleteForever } from "@react-icons/all-files/md/MdDeleteForever";
 import { MdEdit } from "@react-icons/all-files/md/MdEdit";
 import { FaCheck } from "@react-icons/all-files/fa/FaCheck";
+import { IoIosClose } from "@react-icons/all-files/io/IoIosClose";
 import { FaCheckDouble } from "@react-icons/all-files/fa/FaCheckDouble";
 import { Todo } from "../Models";
 import { Draggable } from "react-beautiful-dnd";
@@ -35,6 +36,11 @@ const SingleTodos = ({ index, todo, setTodos }: Props) => {
         setEdit(false);
     }
 
+    const handleClose = () => {
+        setEditTodo(todo.todo);
+        setEdit(false);
+    }
+
     const inputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
@@ -57,7 +63,8 @@ const SingleTodos = ({ index, todo, setTodos }: Props) => {
                             edit ?
                                 <div className="flex items-center">
                                     <input ref={inputRef} className="p-1 outline-none" value={editTodo} onChange={(e) => setEditTodo(e.target.value)} />
-                                    <span className="cursor-pointer pr-1 -ml-6" onClick={() => handleEdit(todo.id)}><FaCheck /></span>
+                                    <span className="cursor-pointer text-green-500 pr-1 -ml-10" onClick={() => handleEdit(todo.id)}><FaCheck className={`text-sm`} /></span>
+                                    <span className="cursor-pointer text-red-500 pr-1 -ml-1" onClick={handleClose}><IoIosClose className={`text-xl`} /></span>
                                 </div>
                                 :
                                 todo.isDone ?
