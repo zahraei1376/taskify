@@ -47,7 +47,7 @@ const SingleTodos = ({ index, todo, setTodos }: Props) => {
                 (provided, snapshot) => (
                     <form
                         className={`${snapshot.isDragging ? "shadow-2xl" : "shadow"} 
-                        transition duration-100 hover:scale-[1.02] rounded bg-amber-400 flex justify-between items-center p-3 my-2`}
+                        transition duration-0 hover:duration-100 hover:scale-[1.02] rounded bg-amber-400 flex justify-between items-center p-3 my-2`}
                         onSubmit={(e) => handleForm(e, todo.id)}
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
