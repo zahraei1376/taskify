@@ -1,21 +1,21 @@
 import { Todo } from "../Models";
 
-const Type = {
+export const Type = {
     ADD_TODO: "ADD_TODO",
     REMOVE_TODO: "REMOVE_TODO",
     DONE: "DONE",
 };
 
 type ActionType =
-    | { type: "ADD_TODO"; payload: string }
-    | { type: "REMOVE_TODO"; payload: number }
-    | { type: "DONE"; payload: number };
+    { type: "ADD_TODO"; payload: string } |
+    { type: "REMOVE_TODO"; payload: number } |
+    { type: "DONE"; payload: number };
 
-interface StateType {
+export interface StateType {
     todos: Todo[],
 }
 
-export const TodoReducer = (state: StateType, action: ActionType) => {
+export const TodoReducer = (state: StateType, action: ActionType): StateType => {
     switch (action.type) {
         case Type.ADD_TODO:
             return {
@@ -31,12 +31,14 @@ export const TodoReducer = (state: StateType, action: ActionType) => {
                 ...state,
                 todos: state.todos.filter(todo => todo.id !== action.payload)
             }
+
         case Type.DONE:
             return {
                 ...state,
                 todos: state.todos.map(todo => todo.id === action.payload ? { ...todo, isDone: true } : todo)
             }
+
         default:
-            return { ...state };
+            return state;
     }
 }
