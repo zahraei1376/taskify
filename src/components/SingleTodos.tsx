@@ -19,12 +19,10 @@ const SingleTodos = ({ index, todo, setTodos }: Props) => {
 
     const handleDone = (id: number) => {
         setTodos({ type: "DONE", payload: { id } })
-        // setTodos(todos.map(todo => todo.id === id ? { ...todo, isDone: !todo.isDone } : todo));
     }
 
     const handleDelete = (id: number) => {
         setTodos({ type: "REMOVE_TODO", payload: { id } });
-        // setTodos(todos.filter(todo => todo.id !== id));
     }
 
     const handleForm = (e: React.FormEvent, id: number) => {
@@ -34,7 +32,6 @@ const SingleTodos = ({ index, todo, setTodos }: Props) => {
 
     const handleEdit = (id: number) => {
         setTodos({ type: "EDIT_TODO", payload: { id, todo: editTodo } });
-        // setTodos(todos.map(todo => todo.id === id ? { ...todo, todo: editTodo } : todo));
         setEdit(false);
     }
 
@@ -74,13 +71,13 @@ const SingleTodos = ({ index, todo, setTodos }: Props) => {
                         }
 
                         <div className="flex">
-                            <span className="cursor-pointer pr-1" onClick={() => {
-                                if (!edit && !todo.isDone) {
+                            {!todo.isDone && <span className="cursor-pointer pr-1" onClick={() => {
+                                if (!edit) {
                                     setEdit(!edit);
                                 }
-                            }}><MdEdit /></span>
-                            <span className="cursor-pointer pr-1" onClick={() => handleDelete(todo.id)}><MdDeleteForever /></span>
-                            <span className="cursor-pointer pr-1" onClick={() => handleDone(todo.id)}><FaCheckDouble /></span>
+                            }}><MdEdit /></span>}
+                            {!todo.isDone && <span className="cursor-pointer pr-1" onClick={() => handleDelete(todo.id)}><MdDeleteForever /></span>}
+                            {!todo.isDone && <span className="cursor-pointer pr-1" onClick={() => handleDone(todo.id)}><FaCheckDouble /></span>}
                         </div>
                     </form>
                 )

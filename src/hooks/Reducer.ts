@@ -52,7 +52,7 @@ export const TodoReducer = (state: StateType, action: ActionType): StateType => 
             const index = sourceTodos.findIndex(item => item.id === action.payload.id);
             if (index < 0) return state;
             const [removed] = sourceTodos.splice(index, 1);
-            destinationTodos.push(removed);
+            destinationTodos.push({ ...removed, isDone: true });
 
             return {
                 ...state,
@@ -75,7 +75,7 @@ export const TodoReducer = (state: StateType, action: ActionType): StateType => 
 
             const [removed] = sourceTodos.splice(source.index, 1);
             if (destination?.index || destination?.index === 0) {
-                destinationTodos.splice(destination.index, 0, removed);
+                destinationTodos.splice(destination.index, 0, { ...removed, isDone: true });
             }
 
             return {
