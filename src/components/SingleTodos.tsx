@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { memo, useEffect, useRef, useState } from "react";
 import { MdDeleteForever } from "@react-icons/all-files/md/MdDeleteForever";
 import { MdEdit } from "@react-icons/all-files/md/MdEdit";
 import { FaCheck } from "@react-icons/all-files/fa/FaCheck";
@@ -14,7 +14,8 @@ type Props = {
     setTodos: React.Dispatch<ActionType>,
 }
 
-const SingleTodos = ({ index, todo, setTodos }: Props) => {
+const SingleTodos = memo(({ index, todo, setTodos }: Props) => {
+    console.log("rerender");
     const [edit, setEdit] = useState<boolean>(false);
     const [editTodo, setEditTodo] = useState<string>(todo.todo);
 
@@ -91,6 +92,6 @@ const SingleTodos = ({ index, todo, setTodos }: Props) => {
             }
         </Draggable>
     )
-};
+});
 
 export default SingleTodos;
